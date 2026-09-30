@@ -58,77 +58,83 @@ const services = [
   },
 ];
 
-const experiencesByService: Record<string, string[]> = {
-  "Dental Implants": [
-    "Implant treatment options were explained clearly",
-    "I understood the treatment plan and next steps",
-    "My questions were answered",
-    "I felt comfortable discussing my concerns",
-    "The visit was well organised",
-    "The follow-up process was explained clearly",
-  ],
+type Experience = {
+  label: string;
+  description: string;
+};
 
-  "Root Canal": [
-    "The treatment process was explained clearly",
-    "I understood what to expect during treatment",
-    "My questions were answered",
-    "I felt comfortable during the visit",
-    "The treatment plan was easy to understand",
-    "The after-care instructions were clear",
-  ],
+const experienceOptions: Experience[] = [
+  {
+    label: "Clarity",
+    description: "Treatment was easy to understand",
+  },
+  {
+    label: "Comfort",
+    description: "Felt comfortable during the visit",
+  },
+  {
+    label: "Care",
+    description: "Felt personally cared for",
+  },
+  {
+    label: "Expertise",
+    description: "Confidence in the dentist’s knowledge",
+  },
+  {
+    label: "Communication",
+    description: "Staff explained things well",
+  },
+  {
+    label: "Organisation",
+    description: "Visit was well managed",
+  },
+  {
+    label: "Confidence",
+    description: "Felt confident about the treatment",
+  },
+  {
+    label: "Support",
+    description: "Help was available when needed",
+  },
+  {
+    label: "Hygiene",
+    description: "Clinic felt clean and hygienic",
+  },
+  {
+    label: "Professionalism",
+    description: "Staff behaved professionally",
+  },
+  {
+    label: "Transparency",
+    description: "Costs and treatment were clear",
+  },
+  {
+    label: "Follow-up",
+    description: "After-treatment support was explained",
+  },
+  {
+    label: "Convenience",
+    description: "Booking and visit were easy",
+  },
+  {
+    label: "Experience",
+    description: "Overall visit experience was good",
+  },
+  {
+    label: "Results",
+    description: "Happy with the treatment outcome",
+  },
+];
 
-  Cleaning: [
-    "The cleaning procedure was explained clearly",
-    "I understood the condition of my teeth",
-    "My questions were answered",
-    "I felt comfortable during the cleaning",
-    "The visit was well organised",
-    "The after-care guidance was clear",
-  ],
-
-  "Teeth Whitening": [
-    "The whitening process was explained clearly",
-    "I understood what to expect from the treatment",
-    "I felt comfortable during the visit",
-    "The treatment process was well explained",
-    "The after-care guidance was clear",
-  ],
-
-  "Braces / Aligners": [
-    "The treatment options were explained clearly",
-    "I understood the proposed treatment plan",
-    "The next steps were clearly explained",
-    "My questions were answered",
-    "I felt comfortable discussing my concerns",
-    "The follow-up process was explained clearly",
-  ],
-
-  "Children's Dentistry": [
-    "The treatment was explained clearly",
-    "My child felt comfortable during the visit",
-    "The dentist communicated well with my child",
-    "My concerns were addressed",
-    "The staff were welcoming",
-    "The after-care instructions were clear",
-  ],
-
-  "Dental Consultation": [
-    "My dental concerns were listened to",
-    "The treatment options were explained clearly",
-    "I understood the advice I received",
-    "My questions were answered",
-    "I felt comfortable discussing my concerns",
-    "The next steps were clear",
-  ],
-
-  Other: [
-    "My treatment was explained clearly",
-    "I understood the available options",
-    "My questions were answered",
-    "I felt comfortable during my visit",
-    "The visit was well organised",
-    "The next steps were clear",
-  ],
+const experiencesByService: Record<string, Experience[]> = {
+  "Dental Implants": experienceOptions,
+  "Root Canal": experienceOptions,
+  Cleaning: experienceOptions,
+  "Teeth Whitening": experienceOptions,
+  "Braces / Aligners": experienceOptions,
+  "Children's Dentistry": experienceOptions,
+  "Dental Consultation": experienceOptions,
+  Other: experienceOptions,
 };
 
 type Language = "English" | "Hindi" | "Marathi";
@@ -310,24 +316,24 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#f8fafc] px-4 py-5 sm:px-6 sm:py-7">
       <div className="mx-auto w-full max-w-[720px]">
-        
-{/* NAVBAR */}
-<header className="mb-8 flex items-center justify-between">
-  <div className="flex items-center">
-    <Image
-      src="/Logo.png"
-      alt="Zircon Dental & Implant Studio"
-      width={190}
-      height={60}
-      className="h-auto w-[165px] object-contain sm:w-[190px]"
-      priority
-    />
-  </div>
 
-  <div className="rounded-full border border-[#0d9488]/15 bg-[#0d9488]/5 px-3.5 py-2 text-[11px] font-medium text-[#0d9488]">
-    Your experience matters
-  </div>
-</header>
+        {/* NAVBAR */}
+        <header className="mb-8 flex items-center justify-between">
+          <div className="flex items-center">
+            <Image
+              src="/Logo.png"
+              alt="Zircon Dental & Implant Studio"
+              width={190}
+              height={60}
+              className="h-auto w-[165px] object-contain sm:w-[190px]"
+              priority
+            />
+          </div>
+
+          <div className="rounded-full border border-[#0d9488]/15 bg-[#0d9488]/5 px-3.5 py-2 text-[11px] font-medium text-[#0d9488]">
+            Your experience matters
+          </div>
+        </header>
 
         {/* PROGRESS */}
         <div className="mb-7">
@@ -498,14 +504,14 @@ export default function HomePage() {
               <div className="mb-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
                 {experiences.map((experience) => {
                   const isSelected =
-                    selectedExperiences.includes(experience);
+                    selectedExperiences.includes(experience.label);
 
                   return (
                     <button
-                      key={experience}
+                      key={experience.label}
                       type="button"
                       onClick={() =>
-                        toggleExperience(experience)
+                        toggleExperience(experience.label)
                       }
                       className={`flex min-h-[76px] items-center gap-3 rounded-xl border p-3.5 text-left transition-all ${
                         isSelected
@@ -523,14 +529,20 @@ export default function HomePage() {
                         <Check size={15} strokeWidth={2.5} />
                       </span>
 
-                      <span
-                        className={`text-sm leading-5 ${
-                          isSelected
-                            ? "font-medium text-[#0f766e]"
-                            : "text-slate-700"
-                        }`}
-                      >
-                        {experience}
+                      <span className="min-w-0 flex-1">
+                        <span
+                          className={`block text-sm font-semibold leading-5 ${
+                            isSelected
+                              ? "text-[#0f766e]"
+                              : "text-slate-800"
+                          }`}
+                        >
+                          {experience.label}
+                        </span>
+
+                        <span className="mt-0.5 block text-xs leading-5 text-slate-500">
+                          {experience.description}
+                        </span>
                       </span>
                     </button>
                   );
@@ -736,7 +748,7 @@ export default function HomePage() {
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0d9488] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-[#0f766e]"
               >
                 <Copy size={17} />
-                Copy &amp; Open Google Review
+                Copy & Open Google Review
                 <ExternalLink size={16} />
               </button>
 
@@ -759,7 +771,7 @@ export default function HomePage() {
           </p>
 
           <p className="mt-1 text-xs font-medium text-slate-500">
-            Zircon Dental &amp; Implant Studio
+            Zircon Dental & Implant Studio
           </p>
         </footer>
       </div>
